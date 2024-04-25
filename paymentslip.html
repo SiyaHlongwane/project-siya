@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Slip</title>
+    <style>
+        /* Your CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Payment Slip</h2>
+        <div class="details">
+            <label for="fullName">Full Name:</label>
+            <span id="fullName"></span>
+        </div>
+        <div class="details">
+            <label for="email">Email:</label>
+            <span id="email"></span>
+        </div>
+        <div class="details">
+            <label for="paymentMethod">Payment Method:</label>
+            <span id="paymentMethod"></span>
+        </div>
+        <div class="details">
+            <label for="amountPaid">Amount Paid:</label>
+            <span id="amountPaid"></span>
+        </div>
+        <div class="details">
+            <label for="additionalInfo">Additional Information:</label>
+            <span id="additionalInfo"></span>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve payment details from localStorage
+        const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
+
+        // Populate payment slip with payment details
+        if (paymentDetails) {
+            document.getElementById("fullName").textContent = paymentDetails.fullName;
+            document.getElementById("email").textContent = paymentDetails.email;
+            document.getElementById("paymentMethod").textContent = paymentDetails.paymentMethod;
+            document.getElementById("amountPaid").textContent = paymentDetails.amountPaid;
+            document.getElementById("additionalInfo").textContent = paymentDetails.additionalInfo;
+        }
+    </script>
+</body>
+</html>

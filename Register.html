@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('kwazi.jpeg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #af4c7a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #a0457d;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .login-link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .login-link a {
+            color: #4caf50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration</h2>
+        <form id="registrationForm">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <br>
+            <span class="error-message" id="usernameError"></span>
+            <br>
+
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <br>
+            <span class="error-message" id="emailError"></span>
+            <br>
+
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <br>
+            <span class="error-message" id="passwordError"></span>
+            <br>
+
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            <br>
+            <span class="error-message" id="confirmPasswordError"></span>
+            <br>
+
+            <input type="submit" value="Register">
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="file:///C:/Users/user/Desktop/Campus%20Cafe/Login.html">Login here</a>.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            // Your validation logic here
+
+            // Store registration data in local storage if validation passes
+            if (validateForm()) {
+                var userData = {
+                    username: username,
+                    email: email,
+                    password: password
+                };
+                localStorage.setItem("userData", JSON.stringify(userData));
+
+                alert("Registration successful.");
+                window.location.href = "file:///C:/Users/user/Desktop/Campus%20Cafe/Login.html";
+            }
+        });
+
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            var passwordError = document.getElementById("passwordError");
+
+            // Reset previous error messages
+            passwordError.textContent = "";
+
+            // Password validation
+            if (password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters long";
+                return false;
+            }
+
+            // Your other validation logic here
+
+            return true; // Return true if validation passes
+        }
+    </script>
+</body>
+</html>

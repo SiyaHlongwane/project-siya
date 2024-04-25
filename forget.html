@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgotten Password</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('file:///C:/Users/user/Downloads/OIP (6).jpeg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px; /* Adjust width as needed */
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333; /* Text color */
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Forgotten Password</h2>
+        <form id="forgotPasswordForm">
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            <br>
+            <input type="submit" value="Reset Password">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var email = document.getElementById("email").value;
+
+            // Here you can implement the logic to send a password reset link to the provided email address
+            // This is just a basic example
+            alert("Password reset link sent to " + email);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('kwazi.jpeg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px; /* Adjust width as needed */
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .forgot-password {
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .forgot-password a {
+            color: #333;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" name="username" placeholder="Username" required>
+            <br>
+            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+        <div class="forgot-password">
+            <a id="forgotPasswordLink">Forgotten Password?</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var username = document.getElementById("loginUsername").value;
+            var password = document.getElementById("loginPassword").value;
+
+            var storedUserData = localStorage.getItem("userData");
+
+            if (!storedUserData) {
+                alert("No user data found. Please register first.");
+                return;
+            }
+
+            var userData = JSON.parse(storedUserData);
+
+            if (username === userData.username && password === userData.password) {
+                alert("Login successful.");
+                // Redirect to the items page
+                window.location.href = "items.html";
+            } else {
+                alert("Invalid username or password.");
+            }
+        });
+
+        // Add click event listener to the "Forgotten Password?" link
+        document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+            // Store the current page URL in the local storage
+            localStorage.setItem("originalPage", window.location.href);
+            // Redirect to the forgotten password page
+            window.location.href = "forget.html"; // Change to the actual forgotten password page URL
+        });
+    </script>
+</body>
+</html>

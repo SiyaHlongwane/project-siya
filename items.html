@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0c0b0b;
+            background-image: url("");  /* Replace 'background.jpg' with your background image path */
+            background-size: cover;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        /* Food item styles */
+        .food-item {
+            width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+            margin-right: 20px; /* Add right margin for spacing */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: #f5f1f1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-item:last-child {
+            margin-right: 0; /* Remove right margin for the last item in each row */
+        }
+
+        .food-item img {
+            max-width: 100%; /* Ensure images fill the container */
+            height: auto;
+            display: block; /* Remove extra space below images */
+            margin: 0 auto; /* Center images horizontally */
+            max-height: 200px; /* Limit the height of the images */
+        }
+
+        .food-item-info {
+            padding: 20px;
+        }
+
+        .food-item-info h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .food-item-info .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .food-item-info input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .food-item-info button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .food-item-info button:hover {
+            background-color: #45a049;
+        }
+
+        /* Shopping cart styles */
+        #cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 1px solid #fffcfc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff9f998;
+            box-shadow: 0 2px 5px rgba(245, 241, 241, 0.1);
+        }
+
+        #cart h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart-items li {
+            margin-bottom: 10px;
+        }
+
+        #total-price {
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #checkout-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items"></ul>
+        <div id="total-price"></div>
+        <button id="checkout-btn">Proceed to Payment</button>
+    </div>
+
+    <div class="container" id="food-items">
+        <h2>Available Food Items</h2>
+        <!-- Food items will be dynamically added here -->
+    </div>
+
+    <script>
+        // Define food items
+        const foodItems = [
+            { name: "Double Chocolate", price: 12.00, image: "download.jpeg" },
+            { name: "Jungle Oats Bar", price: 6.50, image: "1673879014.0135.jpeg" },
+            { name: "Lays Barbecue", price: 18.00, image: "download (2).jpeg" },
+            { name: "Marchiano", price: 15.00, image: "download (3).jpeg" },
+            { name: "Peppe Steak", price: 22.00, image: "steak-large.jpg" },
+            { name: "Sprite 440ml", price: 12.00, image: "OIP (2).jpeg" },
+            { name: "Steak and Kidney", price: 22.00, image: "steakandkidneypudding-5c13fc2d4cedfd00014ece7c.jpg" },
+            { name: "Chocolate Chip", price: 6.00, image: "th (1).jpeg" },
+            { name: "Coke 440ml", price: 12.00, image: "OIP (3).jpeg" },
+            { name: "Doritos Chilli Pepper", price: 20.00, image: "OIP (5).jpeg" },
+            { name: "Doritos Sweet Chilli", price: 20.00, image: "s.jpeg" }
+            // Add more items here
+        ];
+
+        // Store foodItems array in localStorage
+        localStorage.setItem('foodItems', JSON.stringify(foodItems));
+
+        // Clear cart data when the page loads
+        localStorage.removeItem('cart');
+
+        // Display food items
+        const foodItemsContainer = document.getElementById("food-items");
+        foodItems.forEach(item => {
+            const div = document.createElement("div");
+            div.classList.add("food-item");
+            div.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="food-item-info">
+                    <h3>${item.name}</h3>
+                    <div class="price">R${item.price.toFixed(2)}</div>
+                    <input type="number" id="quantity-${item.name.replace(/\s+/g, '-').toLowerCase()}" value="1">
+                    <button class="add-to-cart-btn" onclick="addToCart('${item.name}')">+</button>
+                </div>
+            `;
+            foodItemsContainer.appendChild(div);
+        });
+
+        // Functions to handle cart operations
+        function addToCart(foodType) {
+            const quantityId = `quantity-${foodType.replace(/\s+/g, '-').toLowerCase()}`;
+            const quantity = document.getElementById(quantityId).value;
+            const item = {
+                foodType: foodType,
+                quantity: quantity
+            };
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsList = document.getElementById("cart-items");
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItemsList.innerHTML = "";
+            cart.forEach(item => {
+                const foodItem = foodItems.find(food => food.name === item.foodType);
+                if (foodItem) {
+                    const li = document.createElement("li");
+                    li.textContent = `${item.foodType} x ${item.quantity}`;
+                    cartItemsList.appendChild(li);
+                }
+            });
+            calculateTotalPrice();
+            document.getElementById("cart").style.display = "block";
+            // Remove previous event listener and add a new one to the checkout button
+            const checkoutBtn = document.getElementById("checkout-btn");
+            const newBtn = checkoutBtn.cloneNode(true);
+            checkoutBtn.parentNode.replaceChild(newBtn, checkoutBtn);
+            newBtn.addEventListener("click", proceedToPayment);
+        }
+
+        function calculateTotalPrice() {
+            const totalPriceElement = document.getElementById("total-price");
+            let totalPrice = 0;
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.forEach(item => {
+                const foodItem = foodItems.find(food => food.name === item.foodType);
+                if (foodItem) {
+                    totalPrice += foodItem.price * item.quantity;
+                }
+            });
+            // Store total price in localStorage
+            localStorage.setItem('totalPrice', totalPrice.toFixed(2));
+            totalPriceElement.textContent = "Total Price: R" + totalPrice.toFixed(2);
+        }
+
+        function proceedToPayment() {
+            // Redirect to the payment page
+            window.location.href = "payment.html";
+        }
+
+        // Call updateCartDisplay when the page loads
+        window.onload = updateCartDisplay;
+    </script>
+</body>
+</html>
